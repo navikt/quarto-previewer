@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: quarto-previewer
+  name: quarto-previewer
+  namespace: flyte
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: quarto-previewer
+  template:
+    metadata:
+      labels:
+        app: quarto-previewer
+      name: quarto-previewer
+      namespace: flyte
+    spec:
+      serviceAccountName: flyteadmin
+      containers:
+      - env:
+        - name: STORY_BUCKET
+          value: flyte-artifacts-knada-dev
+        envFrom:
+        - secretRef:
+            name: quarto-previewer-auth
+        image: europe-north1-docker.pkg.dev/knada-dev/flyte-images/quarto-previewer:v12
+        name: quarto-previewer
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: quarto-previewer
+  namespace: flyte
+spec:
+  selector:
+    app: quarto-previewer
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
