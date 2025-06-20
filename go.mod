@@ -8,7 +8,7 @@ require (
 	cloud.google.com/go/storage v1.44.0
 	github.com/coreos/go-oidc/v3 v3.14.1
 	github.com/gabriel-vasile/mimetype v1.4.9
-	github.com/go-chi/chi/v5 v5.2.1
+	github.com/go-chi/chi/v5 v5.2.2
 	github.com/google/uuid v1.6.0
 	github.com/rs/zerolog v1.34.0
 	golang.org/x/oauth2 v0.28.0
